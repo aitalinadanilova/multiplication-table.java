@@ -1,16 +1,19 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void main (String[] args) {
+    private static final int MIN_SIZE = 1;
+    private static final int MAX_SIZE = 32;
+
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите размер таблицы: ");
+        System.out.print("Введите размер таблицы: ");
         int size = scanner.nextInt();
-        if (size < 1 || size > 32) {
-            System.out.println("Размер таблицы должен быть от 1 до 32");
-            return;
+
+        if (size < MIN_SIZE || size > MAX_SIZE) {
+            System.out.println("Размер таблицы должен быть от " + MIN_SIZE + " до " + MAX_SIZE);
         } else {
-            PrintTable print = new PrintTable(size);
-            print.print();
+            PrintTable table = new PrintTable(size);
+            table.print();
         }
         scanner.close();
     }

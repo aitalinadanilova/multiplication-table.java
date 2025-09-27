@@ -1,46 +1,56 @@
 public class PrintTable {
     private final int size;
     private final int cellWidth;
+    private final int firstColWidth;
 
     public PrintTable(int size) {
         this.size = size;
-        this.cellWidth = String.valueOf(size * size).length() + 1;
+        this.cellWidth = digitLength(size * size) + 1;
+        this.firstColWidth = digitLength(size) + 1;
     }
 
     public void print() {
-        printSeparator();
         printHeader();
         printSeparator();
-        printRows();
-    }
-
-    private void printHeader() {
-        System.out.printf("|%" + cellWidth + "s", "");
         for (int i = 1; i <= size; i++) {
-            System.out.printf("|%" + cellWidth + "d", i);
-        }
-        System.out.println("|");
-    }
-
-    private void printSeparator() {
-        for (int i = 0; i <= size; i++) {
-            System.out.print("+");
-            for (int j = 0; j < cellWidth; j++) {
-                System.out.print("-");
-            }
-        }
-        System.out.println("+");
-    }
-
-    private void printRows() {
-        for (int i = 1; i <= size; i++) {
-            System.out.printf("|%" + cellWidth + "d", i);
-            for (int j = 1; j <= size; j++) {
-                System.out.printf("|%" + cellWidth + "d", i * j);
-            }
-            System.out.println("|");
+            printRow(i);
             printSeparator();
         }
     }
-}
 
+    private void printHeader() {
+        System.out.printf("%" + firstColWidth + "s", " ");
+        for (int j = 1; j <= size; j++) {
+            System.out.printf("|%" + cellWidth + "d", j);
+        }
+        System.out.println(); // конец строки
+    }
+
+    private void printSeparator() {
+        System.out.print("+");
+        for (int i = 0; i < firstColWidth; i++) System.out.print("-");
+        System.out.print("+");
+        for (int j = 1; j <= size; j++) {
+            for (int k = 0; k < cellWidth; k++) System.out.print("-");
+            System.out.print("+");
+        }
+        System.out.println();
+    }
+
+    private void printRow(int i) {
+        System.out.printf("%" + firstColWidth + "d", i);
+        for (int j = 1; j <= size; j++) {
+            System.out.printf("|%" + cellWidth + "d", i * j);
+        }
+        System.out.println();
+    }
+
+    private int digitLength(int number) {
+        int length = 0;
+        do {
+            number /= 10;
+            length++;
+        } while (number > 0);
+        return length;
+    }
+}
